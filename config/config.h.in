@@ -1,0 +1,8 @@
+#ifndef CLOX_CONFIG_H
+#define CLOX_CONFIG_H
+
+#define CLOX_VERSION "@CLOX_VERSION@"
+
+#mesondefine DEBUG_TRACE_EXECUTION
+
+#endif /* CLOX_CONFIG_H */

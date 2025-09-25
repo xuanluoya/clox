@@ -1,0 +1,13 @@
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  readability-*,
+  performance-*,
+  portability-*,
+  -readability-identifier-length,
+  -clang-analyzer-cplusplus*,
+  -modernize-* 
+
+# WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+FormatStyle: none

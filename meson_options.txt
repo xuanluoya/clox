@@ -1,0 +1,6 @@
+option(
+  'debug_trace_execution',
+  type: 'boolean',
+  value: false,
+  description: 'Enable execution tracing debug output. In debug builds, defaults to true unless set to false.',
+)
