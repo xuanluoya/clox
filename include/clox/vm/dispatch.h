@@ -4,8 +4,8 @@
 #include "clox/core/chunk.h"
 #include "clox/vm/vm.h"
 
-// Function Pointers of binary operators
-// [WARN|TODO] : In future, Value and Value can use binary arithmetic too
+/// @brief Function Pointers of binary operators
+/// @note [WARN|TODO] : In future, Value and Value can use binary arithmetic too
 typedef void (*BinaryOpFunc)(VM *, double, double);
 
 static inline void addImpl(VM *vm, double a, double b) { push(vm, a + b); }
@@ -22,7 +22,7 @@ static const BinaryOpFunc binaryOps[5] = {
 
 static inline void binaryOp(VM *vm, OpCode op) {
   if (op < OP_ADD || op > OP_DIVIDE || !binaryOps[op]) {
-    // [WARN|TODO]
+    /// [WARN|TODO]
     return;
   }
 

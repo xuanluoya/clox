@@ -11,9 +11,9 @@
 #include "clox/vm/vm.h"
 #include "config.h"
 
-/*
- * The main bytecode execution loop
- * */
+/**
+ * @brief The main bytecode execution loop
+ */
 static InterpretResult executeBytecode(VM *vm) {
   for (;;) {
 
@@ -49,7 +49,7 @@ static InterpretResult executeBytecode(VM *vm) {
       push(vm, -pop(vm));
       break;
     case OP_RETURN: {
-      // make sure there's something to pop
+      /// make sure there's something to pop
       if (vm->stack.count == 0) {
         fprintf(stderr, "Runtime error: stack underflow on OP_RETURN\n");
         return INTERPRET_RUNTIME_ERROR;
@@ -58,7 +58,7 @@ static InterpretResult executeBytecode(VM *vm) {
       pop(vm);
       return INTERPRET_OK;
     }
-    /* WARN: Is provisional */
+    /// WARN: Is provisional
     default:
       fprintf(stderr, "Runtime error: unknown opcode %d\n", instruction);
       return INTERPRET_RUNTIME_ERROR;
@@ -75,10 +75,10 @@ void initVM(VM *vm) {
 void freeVM(VM *vm) { freeDynArray(&vm->stack); }
 
 InterpretResult interpret(VM *vm, const char *source) {
-  // vm->chunk = chunk;
-  // Point to the beginning
-  // vm->ip = (uint8_t *)chunk->code.data;
-  // return executeBytecode(vm);
-  compile(vm, source);
+  /// vm->chunk = chunk;
+  /// Point to the beginning
+  /// vm->ip = (uint8_t *)chunk->code.data;
+  /// return executeBytecode(vm);
+  // compile(vm, source);
   return INTERPRET_OK;
 }

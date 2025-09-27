@@ -14,8 +14,8 @@ static char *readLine(void) {
     fatalError(ERR_FAILURE, "Malloc failed.");
   }
 
-  int c;
-  while ((c = getchar()) != EOF && c != '\n') {
+  int currentChar;
+  while ((currentChar = getchar()) != EOF && currentChar != '\n') {
     if (length + 1 >= capacity) {
       capacity *= 2;
       char *newBuf = realloc(buffer, capacity);
@@ -25,17 +25,17 @@ static char *readLine(void) {
       }
       buffer = newBuf;
     }
-    buffer[length++] = (char)c;
+    buffer[length++] = (char)currentChar;
   }
 
-  if (c == EOF && length == 0) {
+  if (currentChar == EOF && length == 0) {
     free(buffer);
     return NULL;
   }
 
   buffer[length] = '\0';
 
-  // Windows ENTER
+  /// Windows ENTER
   if (length > 0 && buffer[length - 1] == '\r') {
     buffer[length - 1] = '\0';
   }
@@ -44,49 +44,49 @@ static char *readLine(void) {
 }
 
 static char *readFile(const char *path) {
-  // "rb" => read binary
-  // Read binary do't care UTF-XX or ASCII even 1000101001010
+  /// "rb" => read binary
+  /// Read binary do't care UTF-XX or ASCII even 1000101001010
   FILE *file = fopen(path, "rb");
   if (file == NULL) {
     fatalError(ERR_IO, "Cound not open file \"%s\".\n ", path);
   }
 
-  // Move file pointer to file end, is file size
+  /// Move file pointer to file end, is file size
   fseek(file, 0L, SEEK_END);
-  // Return pointer position
+  /// Return pointer position
   long pos = ftell(file);
   if (pos < 0) {
     fclose(file);
     fatalError(ERR_IO, "ftell failed on \"%s\".\n", path);
   }
   size_t fileSize = (size_t)pos;
-  // Move pointer back to file begin
+  /// Move pointer back to file begin
   if (fseek(file, 0L, SEEK_SET) != 0) {
     fclose(file);
     fatalError(ERR_IO, "I/O error: failed to rewind file \"%s\".\n", path);
   }
 
-  // Malloc buffer
+  /// Malloc buffer
   char *buffer = (char *)malloc(fileSize + 1);
   if (buffer == NULL) {
     fatalError(ERR_OS, "Not enough memory to read \"%s\".\n", path);
   }
-  // Read the content
+  /// Read the content
   size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);
   if (bytesRead < fileSize) {
     fatalError(ERR_IO, "Could not read file \"%s\".\n", path);
   }
-  // Add a terminator
+  /// Add a terminator
   buffer[bytesRead] = '\0';
 
   fclose(file);
   return buffer;
 }
 
-void repl(VM *vm) {
+void runREPL(VM *vm) {
   for (;;) {
     printf("> ");
-    // Force the buffer to be written to the terminal
+    /// Force the buffer to be written to the terminal
     fflush(stdout);
 
     char *line = readLine();
@@ -95,7 +95,7 @@ void repl(VM *vm) {
       break;
     }
 
-    // interpret(vm, line);
+    /// interpret(vm, line);
     free(line);
   }
 }

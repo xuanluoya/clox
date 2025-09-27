@@ -12,9 +12,9 @@ int main(int argc, char *argv[]) {
   initVM(&vm);
 
   if (argc == 1) {
-    repl(&vm);
+    runREPL(&vm);
   } else if (argc == 2) {
-    runFile(&vm, argv[1]);
+    executeFile(&vm, argv[1]);
   } else {
     fatalError(ERR_USAGE, "Usage: clox [path]\n");
   }

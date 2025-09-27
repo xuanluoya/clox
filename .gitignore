@@ -108,3 +108,9 @@ compile_commands.json
 
 # Clangd
 .cache
+
+# Doxygen
+docs/doxygen
+
+# python
+__pycache__

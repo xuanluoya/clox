@@ -6,38 +6,41 @@ project(
 )
 
 cc = meson.get_compiler('c')
+if cc.get_id() == 'clang'
+  message('Using Clang (preferred compiler).')
+elif cc.get_id() == 'gcc'
+  warning('Using GCC. This is not officially tested, please use Clang if possible.')
+elif cc.get_id() == 'msvc'
+  error('MSVC is not supported. Please use Clang.')
+else
+  warning('Unknown compiler: ' + cc.get_id() + '. Proceed at your own risk.')
+endif
 
 # Compiler warning flags
-warning_flags = []
+warning_flags = [
+  '-Wall',
+  '-Wextra',
+  '-Wpedantic',
+  '-Wshadow',
+  '-Wconversion',
+  '-Wsign-conversion',
+  '-Wpointer-arith',
+  '-Wcast-qual',
+  '-Wstrict-overflow=5',
+  '-Wundef',
+  '-Wfloat-equal',
+  '-Wformat=2',
+  '-Wmissing-declarations',
+  '-Wmissing-prototypes',
+  '-Wmissing-field-initializers',
+  '-Wredundant-decls',
+  '-Wold-style-definition',
+  '-Wswitch-default',
+  '-Wswitch-enum',
 
-if cc.get_id() != 'msvc'
-  warning_flags += [
-    '-Wall',
-    '-Wextra',
-    '-Wpedantic',
-    '-Wshadow',
-    '-Wconversion',
-    '-Wsign-conversion',
-    '-Wpointer-arith',
-    '-Wcast-qual',
-    '-Wstrict-overflow=5',
-    '-Wundef',
-    '-Wfloat-equal',
-    '-Wformat=2',
-    '-Wmissing-declarations',
-    '-Wmissing-prototypes',
-    '-Wmissing-field-initializers',
-    '-Wredundant-decls',
-    '-Wold-style-definition',
-    '-Wswitch-default',
-    '-Wswitch-enum',
-
-    '-Wno-unused-parameter',
-    '-Wno-unused-variable',
-  ]
-else
-  warning_flags += ['/W4', '/permissive-', '/Zc:__cplusplus']
-endif
+  '-Wno-unused-parameter',
+  '-Wno-unused-variable',
+]
 
 # Build type specific flags
 buildtype = get_option('buildtype')
@@ -56,10 +59,9 @@ endif
 # Configuration options
 debug_trace_execution_opt = get_option('debug_trace_execution')
 
-# 处理布尔选项的自动逻辑：在 Debug 构建中，如果选项未明确设置为 false，则启用它。
 buildtype = get_option('buildtype')
 if buildtype.startswith('debug')
-  debug_trace_execution = (debug_trace_execution_opt != false) # 在debug模式下，除非明确设为false，否则为true
+  debug_trace_execution = (debug_trace_execution_opt != false)
 else
   debug_trace_execution = debug_trace_execution_opt
 endif
@@ -88,6 +90,8 @@ src_files = [
   'src/core/value.c',
   'src/core/memory.c',
   'src/vm/vm.c',
+  'src/compiler/scanner.c',
+  # 'src/compiler/compiler.c',
 ]
 
 # Include directories

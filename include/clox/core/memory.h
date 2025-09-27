@@ -8,10 +8,10 @@
 
 void *reallocate(void *pointer, size_t oldSize, size_t newSize);
 
-/* Expand when the capacity is full */
+/** @brief Expand when the capacity is full */
 static inline size_t grow_capacity(size_t old) { return old < 8 ? 8 : old * 2; }
 
-/* Reallocate more memory */
+/** @brief Reallocate more memory */
 static inline void *grow_array(void *pointer, size_t oldCount, size_t newCount,
                                size_t elemSize) {
   size_t oldSize = oldCount * elemSize;
@@ -25,7 +25,7 @@ static inline void *grow_array(void *pointer, size_t oldCount, size_t newCount,
   return result;
 }
 
-/* Free array */
+/** Free array */
 static inline void *free_array(void *pointer, size_t oldCont,
                                size_t elementSize) {
   size_t oldSize = oldCont * elementSize;

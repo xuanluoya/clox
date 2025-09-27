@@ -5,9 +5,9 @@
 #include "clox/utils/error.h"
 
 /*
- * This reallocate() function is the single function
- * we’ll use for all dynamic memory management in clox—allocating memory,
- * freeing it, and changing the size of an existing allocation.
+ * @note This reallocate() function is the single function
+ * - we’ll use for all dynamic memory management in clox—allocating memory,
+ * - note freeing it, and changing the size of an existing allocation.
  */
 void *reallocate(void *pointer, size_t oldSize, size_t newSize) {
   if (newSize == 0) {

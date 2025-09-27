@@ -21,7 +21,7 @@ void pushDynArray(DynArray *array, void *element) {
 
   memcpy((char *)array->data + (array->count * array->elemSize), element,
          array->elemSize);
-  // auto add one
+  /// auto add one
   array->count++;
 }
 

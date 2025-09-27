@@ -26,7 +26,7 @@ void writeChunk(Chunk *chunk, uint8_t byte, size_t line) {
   }
 }
 
-// Return the index of constants in the constant pool
+/// @brief Return the index of constants in the constant pool
 size_t addConstant(Chunk *chunk, Value value) {
   pushDynArray(&chunk->constants, &value);
   return chunk->constants.count - 1;

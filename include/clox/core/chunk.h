@@ -1,4 +1,4 @@
-/* equences of bytecode */
+/** equences of bytecode */
 #ifndef CLOX_CORE_CHUNK_H
 #define CLOX_CORE_CHUNK_H
 
@@ -8,33 +8,46 @@
 #include "clox/core/value.h"
 #include "clox/utils/dynarr.h"
 
-/* Bytecode operation codes (instructions for the VM) */
+/**
+ * @enum OpCode
+ * @brief Bytecode operation codes (instructions for the VM).
+ *
+ * Each opcode represents a single instruction that the virtual machine can
+ * execute.
+ */
 typedef enum OpCode {
-  OP_CONSTANT, // Push a constant value onto the stack
-  OP_ADD,      // Add the top two stack values (a + b)
-  OP_SUBTRACT, // Subtract the top two stack values (a - b)
-  OP_MULTIPLY, // Multiply the top two stack values (a * b)
-  OP_DIVIDE,   // Divide the top two stack values (a / b)
-  OP_NEGATE,   // Negate the top stack value (-a)
-  OP_RETURN,   // Return from the current function
+  OP_CONSTANT, ///< Push a constant value onto the stack
+  OP_ADD,      ///< Add the top two stack values (a + b)
+  OP_SUBTRACT, ///< Subtract the top two stack values (a - b)
+  OP_MULTIPLY, ///< Multiply the top two stack values (a * b)
+  OP_DIVIDE,   ///< Divide the top two stack values (a / b)
+  OP_NEGATE,   ///< Negate the top stack value (-a)
+  OP_RETURN    ///< Return from the current function
 } OpCode;
 
-/* A run-length record for source line information.
- * Represents a source code line and how many consecutiveinstructions
- * instructions were generated from that line. */
+/**
+ * @struct LineRecord
+ * @brief A run-length record for source line information.
+ *
+ * Represents a source code line and how many consecutive instructions were
+ * generated from that line.
+ */
 typedef struct LineRecord {
-  size_t line;  // Source code line number
-  size_t count; // Number of consecutive instructions from this line
+  size_t line;  ///< Source code line number
+  size_t count; ///< Number of consecutive instructions from this line
 } LineRecord;
 
-/*
- * Represents a contiguous sequence of bytecode instructions
- * A Chunk is the basic unit of executable code in Lox
- * */
+/**
+ * @struct Chunk
+ * @brief Represents a contiguous sequence of bytecode instructions.
+ *
+ * A Chunk is the basic unit of executable code in the VM. It contains the
+ * bytecode, constants pool, and line number information for debugging.
+ */
 typedef struct Chunk {
-  DynArray code;      // Dynamic array of bytecode instructions (uint8_t)
-  DynArray constants; // Constants pool
-  DynArray lines;     // Source code line info
+  DynArray code;      ///< Dynamic array of bytecode instructions (uint8_t)
+  DynArray constants; ///< Constants pool
+  DynArray lines;     ///< Source code line information (LineRecord)
 } Chunk;
 
 void initChunk(Chunk *chunk);

@@ -3,7 +3,8 @@
 
 #include <stddef.h>
 
-/* This typedef abstracts how Lox values are concretely represented in C */
+/** @brief This typedef abstracts how Lox values are concretely represented in C
+ */
 typedef double Value;
 
 void printValue(Value value);
